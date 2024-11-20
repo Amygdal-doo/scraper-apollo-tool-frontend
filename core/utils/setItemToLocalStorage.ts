@@ -1,0 +1,16 @@
+import { LOCAL_STORAGE } from "../const/local-storage";
+
+const setItemToLocalStorage = <T>(key: LOCAL_STORAGE, value: T): void => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    window && window.localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(
+      `Can not get item with key ${key} from local storage - `,
+      error
+    );
+  }
+};
+
+export default setItemToLocalStorage;
