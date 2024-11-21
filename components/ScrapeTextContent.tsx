@@ -13,7 +13,7 @@ const text = [
 
 const ScrapeTextContent = () => {
   const { scrapedLinksData } = useScrapeLinks();
-  const { scrapedLinks, loading, scrapeText } = useScrapeText();
+  const { loading, scrapeText } = useScrapeText();
   const [copyMessages, setCopyMessages] = useState<{ [key: number]: boolean }>(
     {}
   );
