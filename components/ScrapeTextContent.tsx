@@ -5,15 +5,15 @@ import { useScrapeLinks } from "@/providers/ScrapeLinksProvider";
 import { useScrapeText } from "@/providers/ScrapeTextProvider";
 import { Copy } from "lucide-react";
 
-const text = [
-  { id: 1, content: "text 1" },
-  { id: 2, content: "2 text" },
-  { id: 3, content: "3 text" },
-];
+// const text = [
+//   { id: 1, content: "text 1" },
+//   { id: 2, content: "2 text" },
+//   { id: 3, content: "3 text" },
+// ];
 
 const ScrapeTextContent = () => {
   const { scrapedLinksData } = useScrapeLinks();
-  const { loading, scrapeText } = useScrapeText();
+  const { scrapedLinks, loading, scrapeText } = useScrapeText();
   const [copyMessages, setCopyMessages] = useState<{ [key: number]: boolean }>(
     {}
   );
@@ -80,19 +80,20 @@ const ScrapeTextContent = () => {
             </div>
           ))}
         </div>
-        {text.map((item) => (
+        {/* <pre>{JSON.stringify(scrapedLinks, null, 2)}</pre> */}
+        {scrapedLinks.map((item, key) => (
           <div
-            key={item.id}
+            key={key}
             className="bg-gray-300 flex flex-col rounded-md justify-center py-2 px-5 mt-5 leading-8 relative"
           >
-            <p>{item.content}</p>
+            <p>{item.textContent}</p>
             <button
               className="absolute top-2 right-2 text-white px-2 py-1 rounded hover:text-black"
-              onClick={() => handleCopy(item.id, item.content)}
+              onClick={() => handleCopy(key, item.textContent)}
             >
               <Copy />
             </button>
-            {copyMessages[item.id] && (
+            {copyMessages[key] && (
               <span className="absolute top-12 right-2 text-green-600 text-sm">
                 Copied to clipboard!
               </span>
