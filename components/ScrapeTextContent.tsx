@@ -3,17 +3,11 @@ import React, { useState } from "react";
 import { Button } from "./ui/button";
 import { useScrapeLinks } from "@/providers/ScrapeLinksProvider";
 import { useScrapeText } from "@/providers/ScrapeTextProvider";
-import { Copy } from "lucide-react";
-
-// const text = [
-//   { id: 1, content: "text 1" },
-//   { id: 2, content: "2 text" },
-//   { id: 3, content: "3 text" },
-// ];
+import { CheckCheckIcon, Copy } from "lucide-react";
 
 const ScrapeTextContent = () => {
   const { scrapedLinksData } = useScrapeLinks();
-  const { scrapedLinks, loading, scrapeText } = useScrapeText();
+  const { scrapedText, loading, scrapeText } = useScrapeText();
   const [copyMessages, setCopyMessages] = useState<{ [key: number]: boolean }>(
     {}
   );
@@ -29,7 +23,7 @@ const ScrapeTextContent = () => {
   };
 
   const handleScrapeTextClick = async () => {
-    console.log("Selected Links: ", selectedLinks);
+    // console.log("Selected Links: ", selectedLinks);
     await scrapeText(selectedLinks);
   };
 
@@ -50,7 +44,7 @@ const ScrapeTextContent = () => {
             Select from which options do you want to scrape text?
           </p>
           <Button
-            className="font-medium text-base"
+            className="font-bold text-md"
             onClick={handleScrapeTextClick}
             disabled={loading}
           >
@@ -81,23 +75,29 @@ const ScrapeTextContent = () => {
           ))}
         </div>
         {/* <pre>{JSON.stringify(scrapedLinks, null, 2)}</pre> */}
-        {scrapedLinks.map((item, key) => (
+        {scrapedText.map((item, key) => (
           <div
             key={key}
-            className="bg-gray-300 flex flex-col rounded-md justify-center py-2 px-5 mt-5 leading-8 relative"
+            className="bg-gray-300 flex flex-col rounded-md justify-center pb-3 mt-5 leading-8 relative"
           >
-            <p>{item.textContent}</p>
-            <button
-              className="absolute top-2 right-2 text-white px-2 py-1 rounded hover:text-black"
-              onClick={() => handleCopy(key, item.textContent)}
-            >
-              <Copy />
-            </button>
-            {copyMessages[key] && (
-              <span className="absolute top-12 right-2 text-green-600 text-sm">
-                Copied to clipboard!
-              </span>
-            )}
+            <div className="h-12 bg-gray-900 rounded-t-md flex justify-between items-center pl-5 pr-3">
+              <p className="text-white font-bold text-base">text</p>
+              {copyMessages[key] ? (
+                <button className="text-white px-2 py-1 rounded hover:text-black flex items-center">
+                  <p className="text-md pr-2 font-bold">Copied to clipboard!</p>
+                  <CheckCheckIcon />
+                </button>
+              ) : (
+                <button
+                  className="text-white px-2 py-1 rounded hover:text-black flex items-center"
+                  onClick={() => handleCopy(key, item.textContent)}
+                >
+                  <p className="text-md pr-2 font-bold">Copy text</p>
+                  <Copy />
+                </button>
+              )}
+            </div>
+            <p className="px-5 pt-3">{item.textContent}</p>
           </div>
         ))}
       </div>

@@ -74,12 +74,13 @@ export function ScrapeLinksForm() {
   };
 
   const onSubmit = async (data: FormSchemaType) => {
-    console.log("Submitted Data:", data);
+    // console.log("Submitted Data:", data);
     await scrapeLinks(data.urls);
     toast({
       title: "Success",
       description: "URLs submitted successfully!",
     });
+    form.reset();
   };
 
   return (
@@ -106,7 +107,7 @@ export function ScrapeLinksForm() {
                     />
                     <Button
                       type="button"
-                      className="font-medium text-base"
+                      className="font-bold text-md"
                       onClick={handleAddUrl}
                     >
                       Add URL
@@ -147,7 +148,7 @@ export function ScrapeLinksForm() {
             className="w-full flex justify-center font-semibold text-base border text-black bg-gray-300 hover:bg-black/[0.2]"
             type="submit"
           >
-            {loading ? "Scraping" : "Scrape Links"}
+            {loading ? "Scraping" : "Scrape"}
           </Button>
         </div>
       </form>

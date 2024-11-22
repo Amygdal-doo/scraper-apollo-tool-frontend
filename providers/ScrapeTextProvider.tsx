@@ -18,7 +18,8 @@ interface IScrapedLink {
 }
 
 interface IScrapeTextContext {
-  scrapedLinks: IScrapedLink[];
+  scrapedText: IScrapedLink[];
+  setScrapedText: (text: IScrapedLink[] | []) => void;
   loading: boolean;
   scrapeText: (urls: string[]) => Promise<void>;
 }
@@ -30,7 +31,7 @@ const ScrapeTextContext = createContext<IScrapeTextContext | undefined>(
 
 // Define the ScrapeTextProvider component
 export const ScrapeTextProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [scrapedLinks, setScrapedLinks] = useState<IScrapedLink[]>([]);
+  const [scrapedText, setScrapedText] = useState<IScrapedLink[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const { toast } = useToast();
 
@@ -40,12 +41,12 @@ export const ScrapeTextProvider: FC<PropsWithChildren> = ({ children }) => {
 
     try {
       const response: AxiosResponse<IScrapedLink[]> = await apiService.put(
-        `pages/scrape-text/multiple?urls=${urls.join("&urls=")}`,
-        urls.join("&urls=")
+        `pages/scrape-text/multiple`,
+        { urls }
       );
 
       if (response?.data) {
-        setScrapedLinks(response.data); // Save the scraped data
+        setScrapedText(response.data); // Save the scraped data
         console.log("Scraped text response data", response.data);
       }
     } catch (error) {
@@ -63,7 +64,8 @@ export const ScrapeTextProvider: FC<PropsWithChildren> = ({ children }) => {
   return (
     <ScrapeTextContext.Provider
       value={{
-        scrapedLinks,
+        scrapedText,
+        setScrapedText,
         loading,
         scrapeText,
       }}
