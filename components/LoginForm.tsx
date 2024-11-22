@@ -60,7 +60,7 @@ export function LoginForm() {
             <FormItem className="mt-2">
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="username" {...field} />
+                <Input placeholder="example@gmail.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

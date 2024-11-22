@@ -7,10 +7,9 @@ import {
 import { ScrapeLinksForm } from "./ScrapeLinksForm";
 import ScrapeTextContent from "./ScrapeTextContent";
 import { ScrapeApolloForm } from "./ScrapeApolloForm";
-import { useScrapeApollo } from "@/providers/ScrapeApolloProvider";
+import ScrapeApolloContent from "./ScrapeApolloContent";
 
 export function ScrapeOptions() {
-  const { scrapedApolloData } = useScrapeApollo();
   return (
     <Accordion type="multiple" className="w-full">
       <AccordionItem value="item-1">
@@ -35,45 +34,7 @@ export function ScrapeOptions() {
         </AccordionTrigger>
         <AccordionContent>
           <ScrapeApolloForm />
-          <div className="flex flex-col space-x-5">
-            {scrapedApolloData &&
-              scrapedApolloData.technology_names.length > 0 && (
-                <div className="w-full my-5 flex flex-col">
-                  <p className="font-bold text-base mb-2 pl-2">Technologies</p>
-
-                  <ul className="flex flex-wrap">
-                    {scrapedApolloData?.technology_names.map((item, key) => (
-                      <li
-                        key={key}
-                        className={`py-2 m-2 px-4 border text-base rounded-md hover:bg-black/[0.1] 
-                      }`}
-                        onClick={() => {}}
-                      >
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            {scrapedApolloData && scrapedApolloData.job_postings.length > 0 && (
-              <div className="w-full my-5 flex flex-col">
-                <p className="font-bold text-base mb-2 pl-2">Jobs</p>
-
-                <ul className="flex flex-wrap">
-                  {scrapedApolloData?.job_postings.map((item, key) => (
-                    <li
-                      key={key}
-                      className={`py-2 m-2 px-4 border text-base rounded-md hover:bg-black/[0.1] 
-                      }`}
-                      onClick={() => {}}
-                    >
-                      {item.title}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
+          <ScrapeApolloContent />
         </AccordionContent>
       </AccordionItem>
     </Accordion>
